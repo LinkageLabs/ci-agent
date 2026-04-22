@@ -41,3 +41,131 @@ body {
   font-family: "Avenir Next", Avenir, "Helvetica Neue", Helvetica, Arial,
     ui-sans-serif, system-ui, sans-serif;
 }
+
+.markdown {
+  color: var(--foreground);
+  line-height: 1.65;
+}
+.markdown > * + * {
+  margin-top: 1em;
+}
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4 {
+  color: var(--brand-ink);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-top: 1.6em;
+}
+@media (prefers-color-scheme: dark) {
+  .markdown h1,
+  .markdown h2,
+  .markdown h3,
+  .markdown h4 {
+    color: var(--foreground);
+  }
+}
+.markdown h1 {
+  font-size: 1.75rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--brand) 35%, transparent);
+  padding-bottom: 0.3em;
+}
+.markdown h2 {
+  font-size: 1.35rem;
+}
+.markdown h3 {
+  font-size: 1.1rem;
+}
+.markdown p {
+  color: var(--foreground);
+}
+.markdown a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.markdown a:hover {
+  color: var(--brand-hover);
+}
+.markdown strong {
+  color: var(--brand-ink);
+  font-weight: 600;
+}
+@media (prefers-color-scheme: dark) {
+  .markdown strong {
+    color: var(--foreground);
+  }
+}
+.markdown ul,
+.markdown ol {
+  padding-left: 1.4em;
+}
+.markdown ul {
+  list-style: none;
+}
+.markdown ul > li {
+  position: relative;
+  padding-left: 1em;
+}
+.markdown ul > li::before {
+  content: "▸";
+  color: var(--brand);
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+}
+.markdown ol {
+  list-style: decimal;
+}
+.markdown ol > li::marker {
+  color: var(--brand);
+  font-weight: 600;
+}
+.markdown li + li {
+  margin-top: 0.35em;
+}
+.markdown blockquote {
+  border-left: 3px solid var(--brand);
+  padding: 0.25em 0 0.25em 1em;
+  color: var(--muted);
+  font-style: italic;
+}
+.markdown code {
+  background: color-mix(in srgb, var(--brand) 14%, var(--surface));
+  color: var(--brand-ink);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+@media (prefers-color-scheme: dark) {
+  .markdown code {
+    color: var(--foreground);
+  }
+}
+.markdown pre {
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--brand) 25%, transparent);
+  border-radius: 8px;
+  padding: 1em;
+  overflow-x: auto;
+}
+.markdown pre code {
+  background: transparent;
+  padding: 0;
+}
+.markdown hr {
+  border: none;
+  border-top: 1px solid color-mix(in srgb, var(--brand) 30%, transparent);
+  margin: 2em 0;
+}
+.markdown--sm {
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+.markdown--sm h1 {
+  font-size: 1.1rem;
+}
+.markdown--sm h2 {
+  font-size: 1rem;
+}

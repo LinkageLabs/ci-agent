@@ -260,10 +260,7 @@ export default function SessionPage({
         <p className="mt-2 text-sm text-[color:var(--muted)]">
           This typically takes one to three minutes.
         </p>
-        <article
-          ref={reportRef}
-          className="prose prose-neutral mt-8 max-w-none dark:prose-invert"
-        >
+        <article ref={reportRef} className="markdown mt-8">
           <ReactMarkdown>{report || '…'}</ReactMarkdown>
         </article>
       </main>
@@ -289,7 +286,7 @@ export default function SessionPage({
           Download PDF
         </button>
       </header>
-      <article className="prose prose-neutral max-w-none dark:prose-invert">
+      <article className="markdown">
         <ReactMarkdown>{report}</ReactMarkdown>
       </article>
 
@@ -344,7 +341,7 @@ function ChatBubble({ role, text }: { role: 'agent' | 'user'; text: string }) {
         }`}
       >
         {isAgent ? (
-          <div className="prose prose-sm max-w-none dark:prose-invert">
+          <div className="markdown markdown--sm">
             <ReactMarkdown>{text || '…'}</ReactMarkdown>
           </div>
         ) : (
