@@ -1,35 +1,13 @@
-'use client'
-
-import { useState } from 'react'
-
-type PlanId = 'single' | 'pack'
+const PAYMENT_LINK_SINGLE =
+  'https://buy.stripe.com/5kQdR28Yl3LX4vY4AOcQU01'
+const PAYMENT_LINK_PACK =
+  'https://buy.stripe.com/28EcMY6Qdcit7Ia8R4cQU02'
+const PAYMENT_LINK_ENTERPRISE =
+  'https://buy.stripe.com/aFaeV60rPeqB1jMffscQU03'
 
 export default function LandingPage() {
-  const [loading, setLoading] = useState<PlanId | null>(null)
-  const [error, setError] = useState<string | null>(null)
-
-  async function buy(plan: PlanId) {
-    setLoading(plan)
-    setError(null)
-    try {
-      const res = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan }),
-      })
-      const data = (await res.json()) as { url?: string; error?: string }
-      if (!res.ok || !data.url) {
-        throw new Error(data.error ?? 'Checkout failed')
-      }
-      window.location.href = data.url
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong')
-      setLoading(null)
-    }
-  }
-
   return (
-    <main className="mx-auto max-w-5xl px-6 py-16">
+    <main className="mx-auto max-w-6xl px-6 py-16">
       <header className="mb-12">
         <p className="text-sm uppercase tracking-widest text-neutral-500">
           Linkage Labs
@@ -43,10 +21,9 @@ export default function LandingPage() {
         </p>
       </header>
 
-      <section className="grid gap-6 sm:grid-cols-2">
+      <section className="grid gap-6 md:grid-cols-3">
         <PricingCard
           name="Single Analysis"
-          price="$149"
           description="One full report on one company or product."
           features={[
             '10 intake questions',
@@ -55,13 +32,10 @@ export default function LandingPage() {
             'Follow-up questions included',
           ]}
           cta="Buy one analysis"
-          loading={loading === 'single'}
-          disabled={loading !== null}
-          onClick={() => buy('single')}
+          href={PAYMENT_LINK_SINGLE}
         />
         <PricingCard
           name="Credit Pack"
-          price="$599"
           description="Five reports. Save vs buying individually."
           features={[
             '5 separate analyses',
@@ -71,20 +45,21 @@ export default function LandingPage() {
           ]}
           cta="Buy pack"
           highlight
-          loading={loading === 'pack'}
-          disabled={loading !== null}
-          onClick={() => buy('pack')}
+          href={PAYMENT_LINK_PACK}
+        />
+        <PricingCard
+          name="Enterprise Bundle"
+          description="For teams running continuous market scans."
+          features={[
+            'Expanded report volume',
+            'Priority turnaround',
+            'Shared across your team',
+            'Dedicated follow-up support',
+          ]}
+          cta="Buy enterprise"
+          href={PAYMENT_LINK_ENTERPRISE}
         />
       </section>
-
-      {error && (
-        <p
-          role="alert"
-          className="mt-6 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-200"
-        >
-          {error}
-        </p>
-      )}
 
       <section className="mt-20 grid gap-10 sm:grid-cols-3">
         <HowItWorks
@@ -113,35 +88,28 @@ export default function LandingPage() {
 
 function PricingCard({
   name,
-  price,
   description,
   features,
   cta,
-  onClick,
-  loading,
-  disabled,
+  href,
   highlight,
 }: {
   name: string
-  price: string
   description: string
   features: string[]
   cta: string
-  onClick: () => void
-  loading: boolean
-  disabled: boolean
+  href: string
   highlight?: boolean
 }) {
   return (
     <div
-      className={`rounded-2xl border p-8 ${
+      className={`flex flex-col rounded-2xl border p-8 ${
         highlight
           ? 'border-neutral-900 bg-neutral-900 text-white dark:border-white dark:bg-white dark:text-neutral-900'
           : 'border-neutral-200 dark:border-neutral-800'
       }`}
     >
       <h2 className="text-xl font-semibold">{name}</h2>
-      <p className="mt-4 text-4xl font-semibold">{price}</p>
       <p
         className={`mt-2 text-sm ${
           highlight
@@ -156,18 +124,16 @@ function PricingCard({
           <li key={f}>— {f}</li>
         ))}
       </ul>
-      <button
-        type="button"
-        onClick={onClick}
-        disabled={disabled}
-        className={`mt-8 w-full rounded-md px-4 py-3 text-sm font-medium transition disabled:opacity-50 ${
+      <a
+        href={href}
+        className={`mt-8 inline-flex w-full items-center justify-center rounded-md px-4 py-3 text-sm font-medium transition ${
           highlight
             ? 'bg-white text-neutral-900 hover:bg-neutral-200 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800'
             : 'bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200'
         }`}
       >
-        {loading ? 'Redirecting…' : cta}
-      </button>
+        {cta}
+      </a>
     </div>
   )
 }
