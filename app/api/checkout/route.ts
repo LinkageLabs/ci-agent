@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { getStripe, isPlanId, PLANS } from '@/lib/stripe'
+import { getStripe, isPlanId, resolvePriceId } from '@/lib/stripe'
 
 export async function POST(request: Request) {
   let body: unknown
@@ -14,14 +14,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid plan' }, { status: 400 })
   }
 
-  const config = PLANS[plan]
-  const priceId = process.env[config.priceEnv]
-  if (!priceId) {
-    return NextResponse.json(
-      { error: `Price not configured (${config.priceEnv})` },
-      { status: 500 }
-    )
-  }
+  const priceId = resolvePriceId(plan)
 
   const base = process.env.NEXT_PUBLIC_BASE_URL ?? new URL(request.url).origin
 
