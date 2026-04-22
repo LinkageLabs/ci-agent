@@ -205,12 +205,12 @@ export default function SessionPage({
     return (
       <main className="mx-auto flex min-h-dvh max-w-3xl flex-col px-4 py-8">
         <header className="mb-6">
-          <p className="text-xs uppercase tracking-widest text-neutral-500">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--brand)]">
             Intake — Question {questionIndex + 1} of {questions.length}
           </p>
-          <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-neutral-200 dark:bg-neutral-800">
+          <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-[color:var(--brand)]/20">
             <div
-              className="h-full bg-neutral-900 transition-all dark:bg-white"
+              className="h-full bg-[color:var(--brand)] transition-all"
               style={{
                 width: `${((questionIndex + 1) / questions.length) * 100}%`,
               }}
@@ -234,12 +234,12 @@ export default function SessionPage({
             onChange={(e) => setInput(e.target.value)}
             autoFocus
             placeholder="Type your answer…"
-            className="flex-1 rounded-md border border-neutral-300 bg-transparent px-4 py-3 text-sm focus:border-neutral-900 focus:outline-none dark:border-neutral-700 dark:focus:border-white"
+            className="flex-1 rounded-md border border-[color:var(--brand)]/40 bg-transparent px-4 py-3 text-sm text-[color:var(--foreground)] focus:border-[color:var(--brand)] focus:outline-none"
           />
           <button
             type="submit"
             disabled={!input.trim()}
-            className="rounded-md bg-neutral-900 px-6 py-3 text-sm font-medium text-white disabled:opacity-50 dark:bg-white dark:text-neutral-900"
+            className="rounded-md bg-[color:var(--brand)] px-6 py-3 text-sm font-semibold text-[color:var(--brand-ink)] transition hover:bg-[color:var(--brand-hover)] disabled:opacity-50"
           >
             Send
           </button>
@@ -251,8 +251,13 @@ export default function SessionPage({
   if (phase === 'generating') {
     return (
       <main className="mx-auto max-w-3xl px-4 py-16">
-        <h1 className="text-2xl font-semibold">Generating your report…</h1>
-        <p className="mt-2 text-sm text-neutral-500">
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--brand)]">
+          Linkage Labs
+        </p>
+        <h1 className="mt-2 text-2xl font-semibold text-[color:var(--foreground)]">
+          Generating your report…
+        </h1>
+        <p className="mt-2 text-sm text-[color:var(--muted)]">
           This typically takes one to three minutes.
         </p>
         <article
@@ -268,11 +273,18 @@ export default function SessionPage({
   return (
     <main className="mx-auto max-w-3xl px-4 py-10">
       <header className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Your report</h1>
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--brand)]">
+            Linkage Labs
+          </p>
+          <h1 className="mt-1 text-2xl font-semibold text-[color:var(--foreground)]">
+            Your report
+          </h1>
+        </div>
         <button
           type="button"
           onClick={downloadPdf}
-          className="rounded-md border border-neutral-300 px-4 py-2 text-sm hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-900"
+          className="rounded-md border border-[color:var(--brand)] bg-transparent px-4 py-2 text-sm font-semibold text-[color:var(--foreground)] transition hover:bg-[color:var(--brand)] hover:text-[color:var(--brand-ink)]"
         >
           Download PDF
         </button>
@@ -281,9 +293,11 @@ export default function SessionPage({
         <ReactMarkdown>{report}</ReactMarkdown>
       </article>
 
-      <section className="mt-12 border-t border-neutral-200 pt-8 dark:border-neutral-800">
-        <h2 className="text-lg font-semibold">Follow-up questions</h2>
-        <p className="mt-1 text-sm text-neutral-500">
+      <section className="mt-12 border-t border-[color:var(--brand)]/30 pt-8">
+        <h2 className="text-lg font-semibold text-[color:var(--foreground)]">
+          Follow-up questions
+        </h2>
+        <p className="mt-1 text-sm text-[color:var(--muted)]">
           Ask anything about the analysis — included with your purchase.
         </p>
         <div className="mt-6 space-y-4">
@@ -302,13 +316,13 @@ export default function SessionPage({
             value={followupInput}
             onChange={(e) => setFollowupInput(e.target.value)}
             placeholder="Ask a follow-up…"
-            className="flex-1 rounded-md border border-neutral-300 bg-transparent px-4 py-3 text-sm focus:border-neutral-900 focus:outline-none dark:border-neutral-700 dark:focus:border-white"
+            className="flex-1 rounded-md border border-[color:var(--brand)]/40 bg-transparent px-4 py-3 text-sm text-[color:var(--foreground)] focus:border-[color:var(--brand)] focus:outline-none"
             disabled={streaming}
           />
           <button
             type="submit"
             disabled={streaming || !followupInput.trim()}
-            className="rounded-md bg-neutral-900 px-6 py-3 text-sm font-medium text-white disabled:opacity-50 dark:bg-white dark:text-neutral-900"
+            className="rounded-md bg-[color:var(--brand)] px-6 py-3 text-sm font-semibold text-[color:var(--brand-ink)] transition hover:bg-[color:var(--brand-hover)] disabled:opacity-50"
           >
             {streaming ? '…' : 'Ask'}
           </button>
@@ -325,8 +339,8 @@ function ChatBubble({ role, text }: { role: 'agent' | 'user'; text: string }) {
       <div
         className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm ${
           isAgent
-            ? 'bg-neutral-100 text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100'
-            : 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900'
+            ? 'bg-[color:var(--surface)] text-[color:var(--foreground)] ring-1 ring-[color:var(--brand)]/20'
+            : 'bg-[color:var(--brand)] text-[color:var(--brand-ink)]'
         }`}
       >
         {isAgent ? (
@@ -344,12 +358,13 @@ function ChatBubble({ role, text }: { role: 'agent' | 'user'; text: string }) {
 function CenterMessage({ title, body }: { title: string; body?: string }) {
   return (
     <main className="mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center px-6 text-center">
-      <h1 className="text-2xl font-semibold">{title}</h1>
-      {body && (
-        <p className="mt-3 text-sm text-neutral-600 dark:text-neutral-300">
-          {body}
-        </p>
-      )}
+      <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--brand)]">
+        Linkage Labs
+      </p>
+      <h1 className="mt-2 text-2xl font-semibold text-[color:var(--foreground)]">
+        {title}
+      </h1>
+      {body && <p className="mt-3 text-sm text-[color:var(--muted)]">{body}</p>}
     </main>
   )
 }

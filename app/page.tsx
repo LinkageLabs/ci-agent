@@ -9,13 +9,14 @@ export default function LandingPage() {
   return (
     <main className="mx-auto max-w-6xl px-6 py-16">
       <header className="mb-12">
-        <p className="text-sm uppercase tracking-widest text-neutral-500">
+        <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[color:var(--brand)]">
           Linkage Labs
         </p>
-        <h1 className="mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">
-          Competitive intelligence, on demand.
+        <h1 className="mt-3 text-4xl font-semibold tracking-tight text-[color:var(--foreground)] sm:text-5xl">
+          Competitive intelligence,{' '}
+          <span className="text-[color:var(--accent)]">on demand.</span>
         </h1>
-        <p className="mt-4 max-w-2xl text-lg text-neutral-600 dark:text-neutral-300">
+        <p className="mt-4 max-w-2xl text-lg text-[color:var(--muted)]">
           Answer ten questions. Get an analyst-grade report in minutes — the
           same rigor a boutique CI firm would deliver, for a flat fee.
         </p>
@@ -79,7 +80,7 @@ export default function LandingPage() {
         />
       </section>
 
-      <footer className="mt-24 border-t border-neutral-200 pt-8 text-sm text-neutral-500 dark:border-neutral-800">
+      <footer className="mt-24 border-t border-[color:var(--brand)]/30 pt-8 text-sm text-[color:var(--muted)]">
         <p>© {new Date().getFullYear()} Linkage Labs</p>
       </footer>
     </main>
@@ -103,33 +104,52 @@ function PricingCard({
 }) {
   return (
     <div
-      className={`flex flex-col rounded-2xl border p-8 ${
+      className={`flex flex-col rounded-2xl border p-8 transition ${
         highlight
-          ? 'border-neutral-900 bg-neutral-900 text-white dark:border-white dark:bg-white dark:text-neutral-900'
-          : 'border-neutral-200 dark:border-neutral-800'
+          ? 'border-[color:var(--brand-ink)] bg-[color:var(--brand-ink)] text-white shadow-lg shadow-[color:var(--brand)]/20'
+          : 'border-[color:var(--brand)]/40 bg-[color:var(--surface)] text-[color:var(--foreground)] hover:border-[color:var(--brand)]'
       }`}
     >
-      <h2 className="text-xl font-semibold">{name}</h2>
+      <h2
+        className={`text-xl font-semibold ${
+          highlight ? 'text-[color:var(--brand)]' : ''
+        }`}
+      >
+        {name}
+      </h2>
       <p
         className={`mt-2 text-sm ${
-          highlight
-            ? 'text-neutral-300 dark:text-neutral-600'
-            : 'text-neutral-600 dark:text-neutral-400'
+          highlight ? 'text-white/75' : 'text-[color:var(--muted)]'
         }`}
       >
         {description}
       </p>
-      <ul className="mt-6 space-y-2 text-sm">
+      <ul
+        className={`mt-6 space-y-2 text-sm ${
+          highlight ? 'text-white/90' : 'text-[color:var(--foreground)]'
+        }`}
+      >
         {features.map((f) => (
-          <li key={f}>— {f}</li>
+          <li key={f} className="flex gap-2">
+            <span
+              className={
+                highlight
+                  ? 'text-[color:var(--brand)]'
+                  : 'text-[color:var(--accent)]'
+              }
+            >
+              ▸
+            </span>
+            <span>{f}</span>
+          </li>
         ))}
       </ul>
       <a
         href={href}
-        className={`mt-8 inline-flex w-full items-center justify-center rounded-md px-4 py-3 text-sm font-medium transition ${
+        className={`mt-8 inline-flex w-full items-center justify-center rounded-md px-4 py-3 text-sm font-semibold transition ${
           highlight
-            ? 'bg-white text-neutral-900 hover:bg-neutral-200 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800'
-            : 'bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200'
+            ? 'bg-[color:var(--brand)] text-[color:var(--brand-ink)] hover:bg-[color:var(--brand-hover)]'
+            : 'bg-[color:var(--brand-ink)] text-white hover:bg-[color:var(--foreground)]'
         }`}
       >
         {cta}
@@ -149,11 +169,13 @@ function HowItWorks({
 }) {
   return (
     <div>
-      <p className="text-sm font-medium text-neutral-500">Step {step}</p>
-      <h3 className="mt-1 text-lg font-semibold">{title}</h3>
-      <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
-        {body}
+      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--brand)]">
+        Step {step}
       </p>
+      <h3 className="mt-2 text-lg font-semibold text-[color:var(--foreground)]">
+        {title}
+      </h3>
+      <p className="mt-2 text-sm text-[color:var(--muted)]">{body}</p>
     </div>
   )
 }
